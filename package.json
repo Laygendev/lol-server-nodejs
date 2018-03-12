@@ -1,0 +1,23 @@
+{
+ "name": "riotrequestapi",
+ "version": "1.0.0",
+ "description": "Riot Request API",
+ "main": "server.js",
+ "scripts": {
+  "test": "test",
+  "start": "nodemon server.js"
+ },
+ "author": "Jimmy L",
+ "license": "ISC",
+ "devDependencies": {
+  "nodemon": "^1.15.1"
+ },
+ "dependencies": {
+  "express": "^4.16.2",
+  "mongoose": "^5.0.7",
+  "request": "^2.83.0",
+	"mongoose-unique-validator": "2.0.0",
+	"express-session": "1.15.6",
+	"bcrypt": "1.0.3"
+ }
+}
