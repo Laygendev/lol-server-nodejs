@@ -1,7 +1,7 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
-config           = require('./../../config.json');
+const config     = require('./../../config.json');
 
 module.exports = function() {
 	nodemailer.createTestAccount((err, account) => {
