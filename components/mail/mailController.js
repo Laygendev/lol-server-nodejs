@@ -14,6 +14,11 @@ module.exports = function() {
 			auth: {
 				user: config.mail.user, // generated ethereal user
 				pass: config.mail.password // generated ethereal password
+			},
+			dkim: {
+				domainName: config.mail.dkim.domainName,
+				keySelector: config.mail.dkim.keySelector,
+				privateKey: config.mail.dkim.privateKey
 			}
 		});
 
