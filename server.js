@@ -15,6 +15,13 @@ require('./api/models/staticDataChampionModel');
 require('./api/models/itemModel');
 require('./api/models/guideModel');
 require('./api/models/userModel');
+require('./api/routes/summonerRoutes')(app);
+require('./api/routes/spectatorRoutes')(app);
+require('./api/routes/staticDataRoutes')(app);
+require('./api/routes/guideRoutes')(app);
+require('./api/routes/userRoutes')(app);
+require('./api/routes/updateRoutes')(app);
+require('./api/routes/realmsRoutes')(app);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -40,13 +47,6 @@ app.use(function (req, res, next) {
 	next();
 });
 
-require('./api/routes/summonerRoutes')(app);
-require('./api/routes/spectatorRoutes')(app);
-require('./api/routes/staticDataRoutes')(app);
-require('./api/routes/guideRoutes')(app);
-require('./api/routes/userRoutes')(app);
-require('./api/routes/updateRoutes')(app);
-require('./api/routes/realmsRoutes')(app);
 
 var httpsServer = http.createServer(app);
 
