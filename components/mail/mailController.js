@@ -1,24 +1,25 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+config           = require('./../../config.json');
 
 module.exports = function() {
 	nodemailer.createTestAccount((err, account) => {
 
 		// create reusable transporter object using the default SMTP transport
 		let transporter = nodemailer.createTransport({
-			host: 'smtp.lolhype.com',
-			port: 587,
+			host: config.mail.smtp,
+			port: config.mail.port,
 			secure: false, // true for 465, false for other ports
 			auth: {
-				user: 'contact@lolhype.com', // generated ethereal user
-				pass: 'M5eG0wCY5mEiiSfSDIS5@' // generated ethereal password
+				user: config.mail.user, // generated ethereal user
+				pass: config.mail.password // generated ethereal password
 			}
 		});
 
 		// setup email data with unicode symbols
 		let mailOptions = {
-			from: '"LoL Hype" <contact@lolhype.com>', // sender address
+			from: '"LoL Hype" <' + config.mail.user + '>', // sender address
 			to: 'latour.jimmy@gmail.com', // list of receivers
 			subject: 'Hello ✔', // Subject line
 			text: 'Hello world?', // plain text body
