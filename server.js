@@ -8,21 +8,13 @@ var http     = require('http'),
 	session    = require('express-session'),
 	config     = require('./config.json');
 
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://' + config.auth.user + ':' + config.auth.password + '@' + config.auth.ip + ':' + config.auth.port + '/' + config.auth.db)
+
 require('./api/models/staticDataChampionModel');
 require('./api/models/itemModel');
 require('./api/models/guideModel');
 require('./api/models/userModel');
-
-require('./api/routes/summonerRoutes')(app);
-require('./api/routes/spectatorRoutes')(app);
-require('./api/routes/staticDataRoutes')(app);
-require('./api/routes/guideRoutes')(app);
-require('./api/routes/userRoutes')(app);
-require('./api/routes/updateRoutes')(app);
-require('./api/routes/realmsRoutes')(app);
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://' + config.auth.user + ':' + config.auth.password + '@' + config.auth.ip + ':' + config.auth.port + '/' + config.auth.db)
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,6 +24,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
+
 
 // Add headers
 app.use(function (req, res, next) {
@@ -46,6 +39,14 @@ app.use(function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 });
+
+require('./api/routes/summonerRoutes')(app);
+require('./api/routes/spectatorRoutes')(app);
+require('./api/routes/staticDataRoutes')(app);
+require('./api/routes/guideRoutes')(app);
+require('./api/routes/userRoutes')(app);
+require('./api/routes/updateRoutes')(app);
+require('./api/routes/realmsRoutes')(app);
 
 var httpsServer = http.createServer(app);
 
