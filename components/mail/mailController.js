@@ -10,7 +10,7 @@ module.exports = function() {
 		let transporter = nodemailer.createTransport({
 			host: config.mail.smtp,
 			port: config.mail.port,
-			secure: false, // true for 465, false for other ports
+			secure: true, // true for 465, false for other ports
 			auth: {
 				user: config.mail.user, // generated ethereal user
 				pass: config.mail.password // generated ethereal password
