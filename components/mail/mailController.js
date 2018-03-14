@@ -1,8 +1,7 @@
 'use strict';
 
-const nodemailer    = require('nodemailer');
-const config        = require('./../../config.json');
-const EmailTemplate = require('email-templates').EmailTemplate;
+const nodemailer = require('nodemailer');
+const config     = require('./../../config.json');
 
 module.exports.send = function(subject, text, html, recipients) {
 
@@ -22,24 +21,17 @@ module.exports.send = function(subject, text, html, recipients) {
 		}
 	});
 
-	var sendPwdReminder = transporter.templateSender(new EmailTemplate('./email-templates/registration'), {
-		from: config.mail.user,
-	});
-
-	//
-	// // setup email data with unicode symbols
-	// let mailOptions = {
-	// 	from: '"LoL Hype" <' + config.mail.user + '>', // sender address
-	// 	to: recipients,
-	// 	subject: subject,
-	// 	text: text,
-	// 	html: html
-	// };
-
-	sendPwdReminder({
+	// setup email data with unicode symbols
+	let mailOptions = {
+		from: '"LoL Hype" <' + config.mail.user + '>', // sender address
 		to: recipients,
 		subject: subject,
-	}, {}, function(error, info) {
+		text: text,
+		html: html
+	};
+
+	// send mail with defined transport object
+	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			return console.log(error);
 		}
