@@ -3,7 +3,8 @@
 var mongoose = require('mongoose'),
 	https = require('https'),
 	config = require('../../config.json'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	mail = require('../../components/mail/mailController');
 
 exports.post = function(req, resp) {
 	if (req.body.mail &&
@@ -22,8 +23,10 @@ exports.post = function(req, resp) {
 			if (err) {
 				resp.send(err);
 			} else {
+				mail.send( 'LoL Hypes Account', 'Thanks you for using LoL Hype!', '<h3>Thanks you for using LoL Hype</h3>', user.mail );
 				resp.send(user);
 			}
+
 		});
 	}
 };
