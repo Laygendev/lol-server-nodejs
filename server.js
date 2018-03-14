@@ -15,13 +15,6 @@ require('./api/models/staticDataChampionModel');
 require('./api/models/itemModel');
 require('./api/models/guideModel');
 require('./api/models/userModel');
-require('./api/routes/summonerRoutes')(app);
-require('./api/routes/spectatorRoutes')(app);
-require('./api/routes/staticDataRoutes')(app);
-require('./api/routes/guideRoutes')(app);
-require('./api/routes/userRoutes')(app);
-require('./api/routes/updateRoutes')(app);
-require('./api/routes/realmsRoutes')(app);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -53,6 +46,14 @@ var httpsServer = http.createServer(app);
 httpsServer.on('listening', function() {
 	console.log('is listening');
 })
+
+require('./api/routes/summonerRoutes')(app);
+require('./api/routes/spectatorRoutes')(app);
+require('./api/routes/staticDataRoutes')(app);
+require('./api/routes/guideRoutes')(app);
+require('./api/routes/userRoutes')(app);
+require('./api/routes/updateRoutes')(app);
+require('./api/routes/realmsRoutes')(app);
 
 httpsServer.listen(port);
 
