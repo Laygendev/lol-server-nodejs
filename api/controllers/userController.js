@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 	config = require('../../config.json'),
 	User = mongoose.model('User'),
 	mailController = require('../../components/mail/mailController');
-	console.log(mailController);
 
 exports.post = function(req, resp) {
 	if (req.body.mail &&
@@ -24,7 +23,7 @@ exports.post = function(req, resp) {
 			if (err) {
 				resp.send(err);
 			} else {
-				mailController.send( 'LoL Hypes Account', 'Thanks you for using LoL Hype!', '<h3>Thanks you for using LoL Hype</h3>', user.mail );
+				mailController.send( 'LoL Hypes Account', 'Thanks you for using LoL Hype!', '<h3>Thanks you for using LoL Hype</h3>', userData.mail );
 				resp.send(user);
 			}
 
