@@ -6,18 +6,18 @@ var http     = require('http'),
 	mongoose   = require('mongoose'),
 	bodyParser = require('body-parser'),
 	session    = require('express-session'),
-	config     = require('config');
+	config     = require('./config.json');
 
 require('./api/models/staticDataChampionModel');
 require('./api/models/itemModel');
 require('./api/models/guideModel');
 require('./api/models/userModel');
+
 require('./api/routes/summonerRoutes')(app);
 require('./api/routes/spectatorRoutes')(app);
 require('./api/routes/staticDataRoutes')(app);
 require('./api/routes/guideRoutes')(app);
 require('./api/routes/userRoutes')(app);
-require('./api/routes/statusRoutes')(app);
 require('./api/routes/updateRoutes')(app);
 require('./api/routes/realmsRoutes')(app);
 
