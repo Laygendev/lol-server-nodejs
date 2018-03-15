@@ -1,9 +1,10 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+const jade       = require('jade');
 const config     = require('./../../config.json');
 
-module.exports.send = function(subject, text, html, recipients) {
+module.exports.send = function(type, subject, recipients) {
 
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
@@ -21,19 +22,26 @@ module.exports.send = function(subject, text, html, recipients) {
 		}
 	});
 
-	// setup email data with unicode symbols
-	let mailOptions = {
-		from: '"LoL Hype" <' + config.mail.user + '>', // sender address
-		to: recipients,
-		subject: subject,
-		text: text,
-		html: html
-	};
+	fs.readFile('./email-templates/registration/html.jade', 'utf8', function (err, data) {
+		if (err) throw err;
 
-	// send mail with defined transport object
-	transporter.sendMail(mailOptions, (error, info) => {
-		if (error) {
-			return console.log(error);
-		}
+		var fn = jade.compile(data);
+		var html = fn();
+
+		// setup email data with unicode symbols
+		let mailOptions = {
+			from: '"LoL Hype" <' + config.mail.user + '>', // sender address
+			to: recipients,
+			subject: subject,
+			text: text,
+			html: html
+		};
+
+		// send mail with defined transport object
+		transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+				return console.log(error);
+			}
+		});
 	});
 };
