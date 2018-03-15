@@ -1,3 +1,5 @@
+#!/user/bin/env node
+
 var http     = require('http'),
 	fs         = require('fs'),
 	express    = require('express'),
@@ -54,6 +56,8 @@ require('./api/routes/guideRoutes')(app);
 require('./api/routes/userRoutes')(app);
 require('./api/routes/updateRoutes')(app);
 require('./api/routes/realmsRoutes')(app);
+
+require('./components/mail/mailController').send("test", "test", "latour.jimmy@gmail.com");
 
 httpsServer.listen(port);
 

@@ -23,7 +23,8 @@ module.exports.send = function(type, subject, recipients) {
 		}
 	});
 
-	fs.readFile('./components/mail/email-templates/registration/html.jade', 'utf8', function (err, data) {
+/*	fs.readFile('./components/mail/email-templates/registration/html.jade', 'utf8', function (err, data) {
+
 		if (err) throw err;
 
 		var fn = jade.compile(data);
@@ -44,5 +45,5 @@ module.exports.send = function(type, subject, recipients) {
 				return console.log(error);
 			}
 		});
-	});
+	});*/
 };

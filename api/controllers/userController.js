@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	mailController = require('../../components/mail/mailController');
 
 exports.post = function(req, resp) {
+	console.log(req.body);
 	if (req.body.mail &&
 		req.body.pseudo &&
 		req.body.password) {
