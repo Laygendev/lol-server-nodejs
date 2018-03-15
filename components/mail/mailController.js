@@ -2,6 +2,7 @@
 
 const nodemailer = require('nodemailer');
 const jade       = require('jade');
+const fs         = require('fs');
 const config     = require('./../../config.json');
 
 module.exports.send = function(type, subject, recipients) {
