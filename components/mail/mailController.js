@@ -27,14 +27,14 @@ module.exports.send = function(type, subject, recipients) {
 		if (err) throw err;
 
 		var fn = jade.compile(data);
-		var html = fn();
+		var html = fn({'username': 'test'});
 
 		// setup email data with unicode symbols
 		let mailOptions = {
 			from: '"LoL Hype" <' + config.mail.user + '>', // sender address
 			to: recipients,
 			subject: subject,
-			text: text,
+			text: html,
 			html: html
 		};
 
