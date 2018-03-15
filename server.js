@@ -57,8 +57,6 @@ require('./api/routes/userRoutes')(app);
 require('./api/routes/updateRoutes')(app);
 require('./api/routes/realmsRoutes')(app);
 
-require('./components/mail/mailController').send("test", "test", "latour.jimmy@gmail.com");
-
 httpsServer.listen(port);
 
 console.log('riot RESTful API server started on: ' + port);
