@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
 	mailController = require('../../components/mail/mailController');
 
 exports.post = function(req, resp) {
-	console.log(req.body);
 	if (req.body.mail &&
 		req.body.pseudo &&
 		req.body.password) {
@@ -24,7 +23,9 @@ exports.post = function(req, resp) {
 			if (err) {
 				resp.send(err);
 			} else {
-				mailController.send( 'LoL Hypes Account', 'Thanks you for using LoL Hype!', '<h3>Thanks you for using LoL Hype</h3>', userData.mail );
+				mailController.send( 'registration', 'LoL Hypes Account', userData.mail, {
+					pseudo: userData.pseudo
+				} );
 				resp.send(user);
 			}
 
