@@ -5,7 +5,7 @@ const jade       = require('jade');
 const fs         = require('fs');
 const config     = require('./../../config.json');
 
-module.exports.send = function(type, subject, recipients) {
+module.exports.send = function(type, subject, recipients, args) {
 
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
@@ -23,12 +23,12 @@ module.exports.send = function(type, subject, recipients) {
 		}
 	});
 
-/*	fs.readFile('./components/mail/email-templates/registration/html.jade', 'utf8', function (err, data) {
+	fs.readFile('./components/mail/email-templates/' + type + '/html.jade', 'utf8', function (err, data) {
 
 		if (err) throw err;
 
 		var fn = jade.compile(data);
-		var html = fn({'username': 'test'});
+		var html = fn(args);
 
 		// setup email data with unicode symbols
 		let mailOptions = {
@@ -45,5 +45,5 @@ module.exports.send = function(type, subject, recipients) {
 				return console.log(error);
 			}
 		});
-	});*/
+	});
 };
