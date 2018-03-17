@@ -35,9 +35,11 @@ exports.post = function(req, resp) {
 
 exports.auth = function(req, resp) {
 	User.authenticate(req.body.mail, req.body.password, function (error, user) {
-      if (error || !user) {
-        var err = new Error('Wrong email or password.');
-	      resp.send(err);
+      if (error || ! user ) {
+	      resp.send({
+					errors: true,
+					message: 'Wrong email or password.',
+				});
       } else {
         req.session.userId = user._id;
         resp.send(user);
