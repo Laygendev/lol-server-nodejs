@@ -26,7 +26,7 @@ exports.getItems = function(req, resp) {
 	var lang = req.params.lang;
 	var full_lang = lang + "_" + lang;
 
-	fs.readFile('data/items/' + full_lang + '_items.json', 'utf8', (err, data) => {
+	fs.readFile('data/items/en_US_items.json', 'utf8', (err, data) => {
 		if (err) throw err;
 
 		data = JSON.parse(data);
