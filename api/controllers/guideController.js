@@ -8,32 +8,54 @@ var mongoose = require('mongoose'),
 	Guide = mongoose.model('Guide');
 
 exports.post = function(req, resp) {
-	fs.readFile('data/realms.json', 'utf8', (err, realms) => {
-		if (err) throw err;
+	if ( req.body._id ) {
+		Guide.findOne({'_id': req.body._id}, function(err, guide) {
+			if ( guide ) {
+				guide.dateModified = Date.now;
+				guide.starterItemsSlotId = req.body.starterItemsSlotId;
+				guide.buildItemsSlotId = req.body.buildItemsSlotId;
 
-		realms = JSON.parse(realms);
-
-		var itemData = {
-			state: 'draft',
-			championId: req.body.championId,
-			starterItemsSlotId: req.body.starterItemsSlotId,
-			buildItemsSlotId: req.body.buildItemsSlotId,
-			gameMode: req.body.gameMode,
-			favorite: false,
-			version: realms.v,
-			author: req.body.author
-		};
-
-		var newGuide = new Guide(itemData);
-
-		newGuide.save(function(err, guide) {
-			if (err) {
-				resp.send(err);
+				if (guide.state == 'validate' ) {
+					guide.state = "updated";
+				}
 			}
-			resp.send(guide);
 
+			guide.save(function(err, updatedGuide) {
+				if (err) {
+					resp.send(err);
+				}
+				resp.send(updatedGuide);
+			});
 		});
-	});
+	} else {
+
+		fs.readFile('data/realms.json', 'utf8', (err, realms) => {
+			if (err) throw err;
+
+			realms = JSON.parse(realms);
+
+			var itemData = {
+				state: 'draft',
+				championId: req.body.championId,
+				starterItemsSlotId: req.body.starterItemsSlotId,
+				buildItemsSlotId: req.body.buildItemsSlotId,
+				gameMode: req.body.gameMode,
+				favorite: false,
+				version: realms.v,
+				author: req.body.author
+			};
+
+			var newGuide = new Guide(itemData);
+
+			newGuide.save(function(err, guide) {
+				if (err) {
+					resp.send(err);
+				}
+				resp.send(guide);
+
+			});
+		});
+	}
 };
 
 
@@ -42,7 +64,7 @@ exports.put = function(req, resp) {
 		if ( guide ) {
 			guide.dateModified = Date.now;
 
-			if ( guide.state == 'draft' && req.body.state == 'publish' ) {
+			if ( (guide.state == 'draft' || guide.state == 'updated' ) && req.body.state == 'publish' ) {
 				// Check have current guid for this mode and champion in favorite.
 				Guide.findOne({'gameMode': guide.gameMode, championId: guide.championId, favorite: true}, function(err, favoriteGuide) {
 					if ( null == favoriteGuide ) {
