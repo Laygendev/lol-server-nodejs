@@ -11,11 +11,12 @@ exports.post = function(req, resp) {
 	if ( req.body._id ) {
 		Guide.findOne({'_id': req.body._id}, function(err, guide) {
 			if ( guide ) {
+
 				guide.dateModified = Date.now;
 				guide.starterItemsSlotId = req.body.starterItemsSlotId;
 				guide.buildItemsSlotId = req.body.buildItemsSlotId;
 
-				if (guide.state == 'validate' ) {
+				if (guide.state == 'publish' ) {
 					guide.state = "updated";
 				}
 			}
@@ -24,6 +25,7 @@ exports.post = function(req, resp) {
 				if (err) {
 					resp.send(err);
 				}
+				console.log('guide updated');
 				resp.send(updatedGuide);
 			});
 		});
