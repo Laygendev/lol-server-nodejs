@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 	https = require('https'),
 	config = require('../../config.json'),
 	User = mongoose.model('User'),
-	Guide = mongoose.model('Guide');
+	Guide = mongoose.model('Guide'),
+	mailController = require('../../components/mail/mailController');
 
 exports.post = function(req, resp) {
 	if ( req.body._id ) {
@@ -25,7 +26,7 @@ exports.post = function(req, resp) {
 				if (err) {
 					resp.send(err);
 				}
-				console.log('guide updated');
+
 				resp.send(updatedGuide);
 			});
 		});
@@ -53,8 +54,18 @@ exports.post = function(req, resp) {
 				if (err) {
 					resp.send(err);
 				}
-				resp.send(guide);
 
+				User.findOne({'_id': guide.author}, function(err, user) {
+					if (err) {
+						resp.send(err);
+					}
+
+					mailController.send( 'created-guide', 'LoL Hypes Guides', user.mail, {
+						username: user.pseudo
+					} );
+
+					resp.send(guide);
+				});
 			});
 		});
 	}
