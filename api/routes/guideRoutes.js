@@ -1,9 +1,10 @@
 'use strict';
+var guideController = require('./../controllers/guideController');
+
 module.exports = function(app) {
-	var guideController = require('./../controllers/guideController');
 	app.route('/guide')
-		.post(guideController.post)
 		.put(guideController.put)
+		.post(guideController.post)
 	app.route('/guide/author/:authorId')
 	.get(guideController.getByAuthor)
 	app.route('/guide/:gameMode/:championId')
