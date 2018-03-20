@@ -4,7 +4,7 @@ var http     = require('http'),
 	fs         = require('fs'),
 	express    = require('express'),
 	app        = express(),
-	port       = process.env.PORT || 80,
+	port       = process.env.PORT || 3002,
 	mongoose   = require('mongoose'),
 	bodyParser = require('body-parser'),
 	session    = require('express-session'),
@@ -27,10 +27,6 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }));
-
-app.use(require('prerender-node').set('prerenderToken', 'qu3eZzSMnD54SQzjYLei'));
-
-app.use(express.static('public'));
 
 // Add headers
 app.use(function (req, res, next) {
