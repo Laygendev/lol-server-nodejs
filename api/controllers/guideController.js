@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 	https = require('https'),
 	config = require('../../config.json'),
 	User = mongoose.model('User'),
-	Guide = mongoose.model('Guide');
+	Guide = mongoose.model('Guide'),
+	mailController = require('../../components/mail/mailController');
 
 exports.post = function(req, resp) {
 	if ( req.body._id ) {
@@ -25,7 +26,7 @@ exports.post = function(req, resp) {
 				if (err) {
 					resp.send(err);
 				}
-				console.log('guide updated');
+
 				resp.send(updatedGuide);
 			});
 		});
@@ -53,8 +54,18 @@ exports.post = function(req, resp) {
 				if (err) {
 					resp.send(err);
 				}
-				resp.send(guide);
 
+				User.findOne({'_id': guide.author}, function(err, user) {
+					if (err) {
+						resp.send(err);
+					}
+
+					mailController.send( 'created-guide', 'LoL Hypes Guides', user.mail, {
+						username: user.pseudo
+					} );
+
+					resp.send(guide);
+				});
 			});
 		});
 	}
@@ -66,7 +77,7 @@ exports.put = function(req, resp) {
 		if ( guide ) {
 			guide.dateModified = Date.now;
 
-			if ( (guide.state == 'draft' || guide.state == 'updated' ) && req.body.state == 'publish' ) {
+			if ( 'toPublish' == req.body.action &&  (guide.state == 'draft' || guide.state == 'updated' ) && req.body.state == 'publish' ) {
 				// Check have current guid for this mode and champion in favorite.
 				Guide.findOne({'gameMode': guide.gameMode, championId: guide.championId, favorite: true}, function(err, favoriteGuide) {
 					if ( null == favoriteGuide ) {
@@ -81,6 +92,31 @@ exports.put = function(req, resp) {
 						resp.send(updatedGuide);
 					});
 				});
+			}
+
+			if ( 'updateGuide' == req.body.action ) {
+				guide.starterItemsSlotId = req.body.starterItemsSlotId;
+				guide.buildItemsSlotId = req.body.buildItemsSlotId;
+
+				fs.readFile('data/realms.json', 'utf8', (err, realms) => {
+					if (err) throw err;
+
+					realms = JSON.parse(realms);
+
+					guide.version =  realms.v;
+					guide.state = "updated";
+
+					guide.save(function(err, updatedGuide) {
+						if (err) {
+							resp.send(err);
+						}
+						resp.send(updatedGuide);
+					});
+				});
+			}
+
+			if ( ! req.body.action ) {
+				resp.send();
 			}
 		}
 	});

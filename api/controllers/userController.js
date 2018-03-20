@@ -23,11 +23,12 @@ exports.post = function(req, resp) {
 			if (err) {
 				resp.send(err);
 			} else {
-				mailController.send( 'registration', 'LoL Hypes Account', userData.mail, {
-					username: userData.pseudo
-				} );
 				resp.send(user);
 			}
+
+			mailController.send( 'registration', 'LoL Hypes Account', userData.mail, {
+				username: userData.pseudo
+			} );
 
 		});
 	}
