@@ -18,6 +18,7 @@ require('./api/models/itemModel');
 require('./api/models/guideModel');
 require('./api/models/userModel');
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -27,13 +28,9 @@ app.use(session({
 	saveUninitialized: false
 }));
 
-app.configure(function(){
-  // Here we require the prerender middleware that will handle requests from Search Engine crawlers
-  // We set the token only if we're using the Prerender.io service
-  app.use(require('prerender-node').set('prerenderToken', 'qu3eZzSMnD54SQzjYLei'));
-  app.use(express.static("public")); app.use(app.router);
-});
+app.use(require('prerender-node').set('prerenderToken', 'qu3eZzSMnD54SQzjYLei'));
 
+app.use(express.static('public'));
 
 // Add headers
 app.use(function (req, res, next) {
