@@ -26,7 +26,7 @@ exports.post = function(req, resp) {
 				resp.send(user);
 			}
 
-			mailController.send( 'registration', 'LoL Hypes Account', userData.mail, {
+			mailController.send( 'registration', 'Guides LoLs Account', userData.mail, {
 				username: userData.pseudo
 			} );
 

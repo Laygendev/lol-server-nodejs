@@ -60,7 +60,7 @@ exports.post = function(req, resp) {
 						resp.send(err);
 					}
 
-					mailController.send( 'created-guide', 'LoL Hypes Guides', user.mail, {
+					mailController.send( 'created-guide', 'Guides LoLs Guides', user.mail, {
 						username: user.pseudo
 					} );
 

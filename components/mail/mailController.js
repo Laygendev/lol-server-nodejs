@@ -32,7 +32,7 @@ module.exports.send = function(type, subject, recipients, args) {
 
 		// setup email data with unicode symbols
 		let mailOptions = {
-			from: '"LoL Hype" <' + config.mail.user + '>', // sender address
+			from: '"Guides LoL" <' + config.mail.user + '>', // sender address
 			to: recipients,
 			subject: subject,
 			text: html,

@@ -30,7 +30,7 @@ app.use(session({
 
 // Add headers
 app.use(function (req, res, next) {
-	var allowedOrigins = ['http://www.lolhype.com', 'http://lolhype.com',  'http://localhost:4200', 'http://54.36.43.4'];
+	var allowedOrigins = ['http://www.guideslol.com', 'http://guideslol.com',  'http://localhost:4200', 'http://54.36.43.4', 'http://guideslol.com', 'http://www.guideslol.com'];
 	var origin = req.headers.origin;
 	if(allowedOrigins.indexOf(origin) > -1){
 		res.setHeader('Access-Control-Allow-Origin', origin);
