@@ -20,6 +20,8 @@ require('./api/models/userModel');
 
 app.use(require('prerender-node').set('prerenderToken', 'qu3eZzSMnD54SQzjYLei'));
 
+app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
