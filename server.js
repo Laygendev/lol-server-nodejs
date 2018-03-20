@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/user/bin/env node
 
 var http     = require('http'),
