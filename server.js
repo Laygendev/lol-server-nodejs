@@ -1,6 +1,7 @@
 #!/user/bin/env node
 
-var http     = require('http'),
+const http   = require('http'),
+	https      = require('https'),
 	fs         = require('fs'),
 	express    = require('express'),
 	app        = express(),
@@ -9,6 +10,11 @@ var http     = require('http'),
 	bodyParser = require('body-parser'),
 	session    = require('express-session'),
 	config     = require('./config.json');
+
+const options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://' + config.auth.user + ':' + config.auth.password + '@' + config.auth.ip + ':' + config.auth.port + '/' + config.auth.db)
@@ -43,7 +49,7 @@ app.use(function (req, res, next) {
 });
 
 
-var httpsServer = http.createServer(app);
+var httpsServer = https.createServer(options, app);
 
 httpsServer.on('listening', function() {
 	console.log('is listening');
