@@ -16,6 +16,7 @@ const options = {
   cert: fs.readFileSync('/etc/letsencrypt/live/server.guideslol.com/fullchain.pem')
 };
 
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://' + config.auth.user + ':' + config.auth.password + '@' + config.auth.ip + ':' + config.auth.port + '/' + config.auth.db)
 
