@@ -5,7 +5,7 @@ var https = require('https'),
 	config = require('../../config.json'),
 	fs = require('fs');
 
-
+var path = process.cwd() + '/lol-server-nodejs/';
 exports.version;
 
 exports.updatedMessage = new Array();
@@ -38,7 +38,7 @@ exports.updateRealms = function(req, resp, cb) {
 		});
 
 		res.on('end', () => {
-			fs.writeFileSync('data/realms.json', data, 'utf8');
+			fs.writeFileSync(path + 'data/realms.json', data, 'utf8');
 
 			data = JSON.parse(data)
 			exports.version = data.v;
@@ -75,7 +75,7 @@ exports.updateItems = function(req, resp, cb) {
 			}
 
 			jsonData = JSON.stringify(jsonData);
-			fs.writeFileSync('data/items/en_en_items.json', jsonData, 'utf8');
+			fs.writeFileSync(path + 'data/items/en_en_items.json', jsonData, 'utf8');
 
 			exports.updatedMessage.push( 'Updated: en_en items' );
 			cb();
@@ -108,7 +108,7 @@ exports.updateItemslang = function(lang, req, resp, cb) {
 			}
 
 			jsonData = JSON.stringify(jsonData);
-			fs.writeFileSync('data/items/' + lang + '_items.json', jsonData, 'utf8');
+			fs.writeFileSync(path + 'data/items/' + lang + '_items.json', jsonData, 'utf8');
 
 			exports.updatedMessage.push( 'Updated: ' + lang + ' items' );
 			cb();
@@ -139,7 +139,7 @@ exports.updateSummonerSpell = function(req, resp, cb) {
 			}
 
 			jsonData = JSON.stringify(jsonData);
-			fs.writeFileSync('data/en_US_summoner.json', jsonData, 'utf8');
+			fs.writeFileSync(path + 'data/en_US_summoner.json', jsonData, 'utf8');
 
 			exports.updatedMessage.push( 'Updated: en_US summoner' );
 			cb();
@@ -170,7 +170,7 @@ exports.updateChampion = function(req, resp, cb) {
 			}
 
 			jsonData = JSON.stringify(jsonData);
-			fs.writeFileSync('data/en_US_champion.json', jsonData, 'utf8');
+			fs.writeFileSync(path + 'data/en_US_champion.json', jsonData, 'utf8');
 
 			exports.updatedMessage.push( 'Updated: en_US champion' );
 			cb();
