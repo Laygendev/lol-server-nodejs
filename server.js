@@ -3,17 +3,17 @@
 const http   = require('http'),
 	https      = require('https'),
 	fs         = require('fs'),
-	express    = require('express'),
-	app        = express(),
-	port       = process.env.PORT || 443,
+	express    = require('express');
+var app = module.exports = express();
+const port       = process.env.PORT || 443,
 	mongoose   = require('mongoose'),
 	bodyParser = require('body-parser'),
 	session    = require('express-session'),
 	config     = require('./config.json');
 
 const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/server.guideslol.com/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/server.guideslol.com/fullchain.pem')
+  key: fs.readFileSync('/etc/letsencrypt/live/guideslol.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/guideslol.com/fullchain.pem')
 };
 
 
@@ -39,7 +39,7 @@ app.use(express.static('public'));
 
 // Add headers
 app.use(function (req, res, next) {
-	var allowedOrigins = ['http://localhost:4200', 'https://guideslol.com', 'http://guideslol.com', 'http://www.guideslol.com'];
+	var allowedOrigins = ['http://localhost:4200', 'https://guideslol.com', 'http://guideslol.com', 'http://www.guideslol.com', 'http://54.36.43.4:4000', 'http://localhost:4000'];
 
 	var origin = req.headers.origin;
 	if(allowedOrigins.indexOf(origin) > -1){
@@ -53,11 +53,11 @@ app.use(function (req, res, next) {
 });
 
 
-var httpsServer = https.createServer(options, app);
-
-httpsServer.on('listening', function() {
-	console.log('is listening');
-})
+// var httpsServer = https.createServer(options, app);
+// //
+// httpsServer.on('listening', function() {
+// 	console.log('is listening');
+// })
 
 require('./api/routes/summonerRoutes')(app);
 require('./api/routes/spectatorRoutes')(app);
@@ -67,6 +67,4 @@ require('./api/routes/userRoutes')(app);
 require('./api/routes/updateRoutes')(app);
 require('./api/routes/realmsRoutes')(app);
 
-httpsServer.listen(port, 'server.guideslol.com');
-
-console.log('riot RESTful API server started on: ' + port);
+// httpsServer.listen(3000, 'server.guideslol.com');

@@ -2,9 +2,10 @@
 
 var fs = require('fs');
 
+var path = process.cwd() + '/lol-server-nodejs/';
 
 exports.get = function(req, resp) {
-	fs.readFile('data/realms.json', 'utf8', (err, data) => {
+	fs.readFile( path + 'data/realms.json', 'utf8', (err, data) => {
 		if (err) throw err;
 
 		data = JSON.parse(data);

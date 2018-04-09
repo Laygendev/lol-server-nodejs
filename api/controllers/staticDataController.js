@@ -9,8 +9,10 @@ var https = require('https'),
 	fs = require('fs');
 
 
+var path = process.cwd() + '/lol-server-nodejs/';
+
 exports.getChampions = function(req, resp) {
-	fs.readFile('data/en_US_champion.json', 'utf8', (err, data) => {
+	fs.readFile(path + 'data/en_US_champion.json', 'utf8', (err, data) => {
 		if (err) throw err;
 
 		data = JSON.parse(data);
@@ -26,7 +28,7 @@ exports.getItems = function(req, resp) {
 	var lang = req.params.lang;
 	var full_lang = lang + "_" + lang;
 
-	fs.readFile('data/items/en_US_items.json', 'utf8', (err, data) => {
+	fs.readFile(path + 'data/items/en_US_items.json', 'utf8', (err, data) => {
 		if (err) throw err;
 
 		data = JSON.parse(data);
@@ -46,7 +48,7 @@ exports.getItems = function(req, resp) {
 }
 
 exports.getSummonerSpells = function(req, resp) {
-	fs.readFile('data/en_US_summoner.json', 'utf8', (err, data) => {
+	fs.readFile(path + 'data/en_US_summoner.json', 'utf8', (err, data) => {
 		if (err) throw err;
 
 		data = JSON.parse(data);
