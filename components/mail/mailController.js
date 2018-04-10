@@ -5,6 +5,8 @@ const jade       = require('jade');
 const fs         = require('fs');
 const config     = require('./../../config.json');
 
+var path = process.cwd() + '/lol-server-nodejs/';
+
 module.exports.send = function(type, subject, recipients, args) {
 
 	// create reusable transporter object using the default SMTP transport
@@ -23,7 +25,7 @@ module.exports.send = function(type, subject, recipients, args) {
 		}
 	});
 
-	fs.readFile('./components/mail/email-templates/' + type + '/html.jade', 'utf8', function (err, data) {
+	fs.readFile(path + '/components/mail/email-templates/' + type + '/html.jade', 'utf8', function (err, data) {
 
 		if (err) throw err;
 
