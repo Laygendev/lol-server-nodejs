@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
 	Guide = mongoose.model('Guide'),
 	mailController = require('../../components/mail/mailController');
 
+var path = process.cwd() + '/lol-server-nodejs/';
+
 exports.post = function(req, resp) {
 	if ( req.body._id ) {
 		Guide.findOne({'_id': req.body._id}, function(err, guide) {
@@ -32,7 +34,7 @@ exports.post = function(req, resp) {
 		});
 	} else {
 
-		fs.readFile('data/realms.json', 'utf8', (err, realms) => {
+		fs.readFile(path + 'data/realms.json', 'utf8', (err, realms) => {
 			if (err) throw err;
 
 			realms = JSON.parse(realms);
@@ -98,7 +100,7 @@ exports.put = function(req, resp) {
 				guide.starterItemsSlotId = req.body.starterItemsSlotId;
 				guide.buildItemsSlotId = req.body.buildItemsSlotId;
 
-				fs.readFile('data/realms.json', 'utf8', (err, realms) => {
+				fs.readFile(path + 'data/realms.json', 'utf8', (err, realms) => {
 					if (err) throw err;
 
 					realms = JSON.parse(realms);
