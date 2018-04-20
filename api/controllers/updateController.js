@@ -75,7 +75,7 @@ exports.updateItems = function(req, resp, cb) {
 			}
 
 			jsonData = JSON.stringify(jsonData);
-			fs.writeFileSync(path + 'data/items/en_en_items.json', jsonData, 'utf8');
+			fs.writeFileSync(path + 'data/items/en_US_items.json', jsonData, 'utf8');
 
 			exports.updatedMessage.push( 'Updated: en_en items' );
 			cb();
